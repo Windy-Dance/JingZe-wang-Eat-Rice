@@ -1,16 +1,29 @@
 # JingZe-wang-Eat-Rice
-突发奇想写了一个王境泽吃炒饭的项目。欢迎前来交流。
-写得有点匆忙，没有注释，代码也不够Pythonic
-然而这是1.0版本，有时间我会再更新。
-操作方式：字母wsad或者方向键操作。
-### 这个版本没有任何的挑战性。
-## WJZ类
-该类定义了中国一位伟大的哲学家，思想家王境泽。他的人生目标就是吃炒饭。
-## CF类
-该类定义了一碗香喷喷的，具有诱惑力的炒饭。
-他们居住在一个叫做cfm的列表里。
-##### 为什么不完全pygame提供的pygame.sprite.Sprite?
-很简单，~~因为我不会~~。但是本人正在啃官方文档。
 
-你可以更改这个项目使他变得更好，但是请不要顶替掉我的文件。
-请新建一个分支来放上你的伟大改进。
+王境泽吃炒饭的 pygame 小游戏：控制王境泽移动去吃炒饭，每吃 10 分多出 3 碗炒饭。
+
+## 运行
+
+```bash
+pip install pygame
+python JingZewangEatRiceV1.0/Eating.py
+```
+
+## 操作
+
+- `W` / `↑` 上移
+- `S` / `↓` 下移
+- `A` / `←` 左移
+- `D` / `→` 右移
+
+## 目录结构
+
+```
+JingZewangEatRiceV1.0/Eating.py  主游戏
+JingZewangEatRiceV1.0/sb.py      炒饭乱飞演示
+JingZewangEatRiceV1.0/wjz.png    角色图片
+JingZewangEatRiceV1.0/cf.png     炒饭图片
+JingZewangEatRiceV1.0/yummy.mp3  背景音乐
+```
+
+欢迎开分支改进。
