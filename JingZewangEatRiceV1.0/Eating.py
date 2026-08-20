@@ -2,23 +2,27 @@
 import sys
 import pygame
 import random
-lists = []
+
+levels = []
 for i in range(100):
-    tmp = (i+1)*10
-    lists.append(tmp)
+    tmp = (i + 1) * 10
+    levels.append(tmp)
+
 pygame.init()
 pygame.mixer.init()
 pygame.mixer.music.load("yummy.mp3")
 screen = pygame.display.set_mode((700, 700))
 pygame.display.set_caption("王境泽吃炒饭")
+clock = pygame.time.Clock()
 font = pygame.font.SysFont("SimHei", 50)
 
 
 class WJZ:
+    image = pygame.image.load("wjz.png").convert_alpha()
+
     def __init__(self):
         self.x = 300
         self.y = 300
-        self.image = pygame.image.load("wjz.png").convert_alpha()
         self.speed = 4
         self.lmove = False
         self.rmove = False
@@ -45,8 +49,10 @@ class WJZ:
 
 
 class CF:
+    image = pygame.image.load("cf.png").convert_alpha()
+
     def restart(self):
-        pygame.mixer.music.play(1,0)
+        pygame.mixer.music.play(1, 0)
         self.x = random.randint(0, self.mx)
         self.y = random.randint(0, self.my)
 
@@ -55,20 +61,16 @@ class CF:
         self.my = 650
         self.x = random.randint(0, self.mx)
         self.y = random.randint(0, self.my)
-        self.image = pygame.image.load("cf.png").convert_alpha()
 
 
 def checkCrash(c, w):
-    if (w.x + 0.7 * w.image.get_width() > c.x) and (
-            w.x + 0.3 * w.image.get_width() < c.x + c.image.get_width()) and (
-            w.y + 0.7 * w.image.get_height() > c.y) and (
-            w.y + 0.3 * w.image.get_height() < c.y + c.image.get_height()):
-        return True
-    return False
+    return (w.x + 0.7 * w.image.get_width() > c.x and
+            w.x + 0.3 * w.image.get_width() < c.x + c.image.get_width() and
+            w.y + 0.7 * w.image.get_height() > c.y and
+            w.y + 0.3 * w.image.get_height() < c.y + c.image.get_height())
 
 
 wjz = WJZ()
-cf = CF()
 score = 0
 
 cfm = []
@@ -78,6 +80,7 @@ for i in range(3):
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            pygame.quit()
             sys.exit()
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_a or event.key == pygame.K_LEFT:
@@ -93,20 +96,22 @@ while True:
             wjz.dmove = False
             wjz.rmove = False
             wjz.lmove = False
+
+    clock.tick(60)
     screen.fill((230, 230, 230))
-    fonts = font.render(f"分数:{score}",1,(255,255,255))
-    
-    if score > 0:
-        if score in lists:
-            for i in range(3):
-                cfm.append(CF())
-            del lists[0]
+    fonts = font.render(f"分数:{score}", 1, (255, 255, 255))
+
+    if score > 0 and score in levels:
+        for i in range(3):
+            cfm.append(CF())
+        levels.remove(score)
+
     for cfs in cfm:
-        screen.blit(cfs.image,(cfs.x,cfs.y))
-        if checkCrash(cfs,wjz):
+        screen.blit(cfs.image, (cfs.x, cfs.y))
+        if checkCrash(cfs, wjz):
             score += 1
             cfs.restart()
     wjz.move()
     screen.blit(wjz.image, (wjz.x, wjz.y))
-    screen.blit(fonts,(0,0))
+    screen.blit(fonts, (0, 0))
     pygame.display.update()

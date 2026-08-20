@@ -8,24 +8,22 @@ pygame.init()
 screen = pygame.display.set_mode((800, 800))
 clock = pygame.time.Clock()
 
+
 class CF:
-    def restart(self):
-        self.x = random.randint(0, self.mx)
-        self.y = random.randint(0, self.my)
+    image = pygame.image.load("cf.png").convert_alpha()
 
     def __init__(self):
         self.mx = 870
         self.my = 870
         self.x = random.randint(0, self.mx)
         self.y = random.randint(0, self.my)
-        self.xs = random.randint(1,2) + random.random()
-        self.ys = random.randint(1,2) + random.random()
-        self.image = pygame.image.load("cf.png").convert_alpha()
+        self.xs = random.randint(1, 2) + random.random()
+        self.ys = random.randint(1, 2) + random.random()
 
-cf = CF()
-l = []
+
+cfs = []
 for i in range(789):
-    l.append(CF())
+    cfs.append(CF())
 
 while True:
     for e in pygame.event.get():
@@ -34,13 +32,13 @@ while True:
             sys.exit()
     clock.tick(60)
     screen.fill((230, 230, 230))
-    for cf in l:
-        screen.blit(cf.image, (cf.x, cf.y))
-        cf.x -= cf.xs
-        cf.y -= cf.ys
-        if cf.y > 770 or cf.y < 0:
-            cf.ys = -cf.ys
-        if cf.x > 770 or cf.x < 0:
-            cf.xs = -cf.xs
+    for c in cfs:
+        screen.blit(c.image, (c.x, c.y))
+        c.x -= c.xs
+        c.y -= c.ys
+        if c.y > 770 or c.y < 0:
+            c.ys = -c.ys
+        if c.x > 770 or c.x < 0:
+            c.xs = -c.xs
 
     pygame.display.update()
